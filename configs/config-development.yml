@@ -11,6 +11,7 @@ postgres:
   user: postgres
   password: admin
   db_name: car_bid_db
+  ssl_mode: disable
 redis:
   host: localhost
   port: 6379

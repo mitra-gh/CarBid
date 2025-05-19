@@ -1,6 +1,8 @@
 package cache
 
 import (
+	"context"
+	"fmt"
 	"time"
 
 	"github.com/mitra-gh/CarBid/configs"
@@ -9,7 +11,7 @@ import (
 
 var redisClient *redis.Client
 
-func InitRedis(cfg *configs.Config) *redis.Client {
+func InitRedis(cfg *configs.Config) error {
 	redisClient = redis.NewClient(&redis.Options{
 		Addr:     cfg.Redis.Host + ":" + cfg.Redis.Port,
 		Password: cfg.Redis.Password,
@@ -20,7 +22,13 @@ func InitRedis(cfg *configs.Config) *redis.Client {
 		PoolSize: cfg.Redis.PoolSize,
 		PoolTimeout: cfg.Redis.PoolTimeout * time.Second,
 	})
-	return redisClient
+
+	ctx := context.Background()
+	if err := redisClient.Ping(ctx).Err(); err != nil {
+		return fmt.Errorf("failed to ping redis: %w", err)
+	}
+
+	return nil
 }
 
 func GetRedisClient() *redis.Client {

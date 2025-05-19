@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mitra-gh/CarBid/configs"
 )
+var router *gin.Engine
 
 func InitServer(cfg *configs.Config) {
 	router := gin.New()
@@ -14,3 +15,4 @@ func InitServer(cfg *configs.Config) {
 
 	router.Run(fmt.Sprintf(":%s", cfg.Server.Port))
 }
+

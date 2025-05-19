@@ -31,6 +31,7 @@ type PostgresConfig struct {
 	User     string `mapstructure:"user"`
 	Password string `mapstructure:"password"`
 	DBName   string `mapstructure:"db_name"`
+	SSLMode  string `mapstructure:"ssl_mode"`
 }
 
 type RedisConfig struct {
@@ -88,6 +89,6 @@ func getConfigPath(env string) string {
 	case "production":
 		return "./configs/config-production.yml"
 	default:
-		return "../configs/config-development.yml"
+		return "../../configs/config-development.yml"
 	}
 }
