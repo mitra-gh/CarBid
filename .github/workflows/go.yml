@@ -22,7 +22,7 @@ jobs:
         go-version: '1.22'
 
     - name: Build
-      run: go mod download && go build -v ./cmd/car_bid/main.go
+      run: go mod download && go build -v cmd/car_bid/main.go
 
     - name: Test
       run: go test -v ./...
