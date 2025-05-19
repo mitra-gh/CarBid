@@ -1,0 +1,35 @@
+definitions:
+  responseHelper.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      error: {}
+      message:
+        type: string
+      validations:
+        items:
+          type: string
+        type: array
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/health:
+    get:
+      consumes:
+      - application/json
+      description: Health check
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responseHelper.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/responseHelper.Response'
+      summary: Health check
+swagger: "2.0"
