@@ -1,23 +1,16 @@
 package api
 
 import (
-	"net/http"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mitra-gh/CarBid/configs"
 )
 
-func InitServer() {
+func InitServer(cfg *configs.Config) {
 	router := gin.New()
 	router.Use(gin.Logger(), gin.Recovery())
 
 
-	v1 := router.Group("/api/v1")
-
-	{
-		v1.GET("/health", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{"message": "OK"})
-		})
-	}
-
-	router.Run(":8080")
+	router.Run(fmt.Sprintf(":%s", cfg.Server.Port))
 }

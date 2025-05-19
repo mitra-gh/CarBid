@@ -2,6 +2,7 @@ package configs
 
 import (
 	"os"
+	"time"
 
 	"github.com/spf13/viper"
 )
@@ -37,9 +38,12 @@ type RedisConfig struct {
 	Port         string `mapstructure:"port"`
 	Password     string `mapstructure:"password"`
 	DB           int    `mapstructure:"db"`
-	MinIdleConns int    `mapstructure:"min_idle_conns"`
 	PoolSize     int    `mapstructure:"pool_size"`
-	PoolTimeout  int    `mapstructure:"pool_timeout"`
+	PoolTimeout  time.Duration    `mapstructure:"pool_timeout"`
+	DialTimeout  time.Duration    `mapstructure:"dial_timeout"`
+	ReadTimeout  time.Duration    `mapstructure:"read_timeout"`
+	WriteTimeout time.Duration    `mapstructure:"write_timeout"`
+	IdleCheckFrequency int    `mapstructure:"idle_check_frequency"`
 }
 
 
