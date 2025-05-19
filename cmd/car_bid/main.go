@@ -6,6 +6,7 @@ import (
 	"github.com/mitra-gh/CarBid/configs"
 	"github.com/mitra-gh/CarBid/internal/api"
 	"github.com/mitra-gh/CarBid/internal/data/cache"
+	"github.com/mitra-gh/CarBid/internal/data/db"
 )
 
 func main() {
@@ -15,8 +16,22 @@ func main() {
 	}
 
 	// Initialize Redis
-	cache.InitRedis(cfg)
+	err = cache.InitRedis(cfg)
+	if err != nil {
+		log.Fatalf("Failed to initialize redis: %v", err)
+	}
 	defer cache.CloseRedis()
+
+
+
+	// Initialize Database
+	err = db.InitDB(cfg)
+	if err != nil {
+		log.Fatalf("Failed to initialize database: %v", err)
+	}
+	defer db.CloseDB()
+
+
 
 	// Initialize Server
 	api.InitServer(cfg)
