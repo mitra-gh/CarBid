@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  run_mode: debug
+logger:
+  level: debug
+  filePath: ../logs/car_bid.log
+  encoding: json
+postgres:
+  host: postgres_container
+  port: 5432
+  user: postgres
+  password: admin
+  db_name: car_bid_db
+redis:
+  host: redis_container
+  port: 6379
+  password: 123456
+  db: 0
+  min_idle_conns: 100
+  pool_size: 5000
+  pool_timeout: 240

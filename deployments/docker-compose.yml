@@ -33,7 +33,7 @@ services:
     container_name: redis_container
     command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
-      - ../config/redis.conf:/usr/local/etc/redis/redis.conf
+      - ../configs/redis.conf:/usr/local/etc/redis/redis.conf
       - redis_data:/data
     ports:
       - 6379:6379
