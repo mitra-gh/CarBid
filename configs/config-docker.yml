@@ -5,6 +5,7 @@ logger:
   level: debug
   filePath: ../logs/car_bid.log
   encoding: json
+  type: zap
 postgres:
   host: postgres_container
   port: 5432

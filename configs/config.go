@@ -23,6 +23,7 @@ type LoggerConfig struct {
 	Level    string `mapstructure:"level"`
 	FilePath string `mapstructure:"file_path"`
 	Encoding string `mapstructure:"encoding"`
+	Type     string `mapstructure:"type"`
 }
 
 type PostgresConfig struct {
@@ -83,12 +84,12 @@ func LoadConfig(filename string, fileType string) (*viper.Viper, error) {
 func getConfigPath(env string) string {
 	switch env {
 	case "development":
-		return "../configs/config-development.yml"
+		return "./configs/config-development.yml"
 	case "docker":
 		return "./configs/config-docker.yml"
 	case "production":
 		return "./configs/config-production.yml"
 	default:
-		return "../../configs/config-development.yml"
+		return "./configs/config-development.yml"
 	}
 }

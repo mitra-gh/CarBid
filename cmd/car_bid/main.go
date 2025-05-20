@@ -7,6 +7,7 @@ import (
 	"github.com/mitra-gh/CarBid/internal/api"
 	"github.com/mitra-gh/CarBid/internal/data/cache"
 	"github.com/mitra-gh/CarBid/internal/data/db"
+	"github.com/mitra-gh/CarBid/pkg/logging"
 )
 
 func main() {
@@ -15,23 +16,23 @@ func main() {
 		log.Fatalf("Failed to load config: %v", err)
 	}
 
+	logger := logging.NewLogger(cfg)
+
+	logger.Info(logging.General, logging.StartUp, "Application started", nil)
+
 	// Initialize Redis
 	err = cache.InitRedis(cfg)
 	if err != nil {
-		log.Fatalf("Failed to initialize redis: %v", err)
+		logger.Fatal(logging.Cache, logging.StartUp, err.Error(),nil)
 	}
 	defer cache.CloseRedis()
-
-
 
 	// Initialize Database
 	err = db.InitDB(cfg)
 	if err != nil {
-		log.Fatalf("Failed to initialize database: %v", err)
+		logger.Fatal(logging.Database, logging.StartUp, err.Error(),nil)
 	}
 	defer db.CloseDB()
-
-
 
 	// Initialize Server
 	api.InitServer(cfg)
