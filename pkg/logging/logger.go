@@ -22,5 +22,8 @@ func NewLogger(cfg *configs.Config) Logger {
 	if cfg.Logger.Type == "zap" {
 		return NewZapLogger(cfg)
 	}
+	if cfg.Logger.Type == "zerolog" {
+		return NewZerologLogger(cfg)
+	}
 	return nil
 }

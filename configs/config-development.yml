@@ -3,9 +3,9 @@ server:
   run_mode: debug
 logger:
   level: debug
-  file_path: ./logs/car_bid.log
+  file_path: ./logs/logs.log
   encoding: json
-  type: zap
+  type: zerolog
 postgres:
   host: localhost
   port: 5432

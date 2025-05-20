@@ -3,7 +3,7 @@ server:
   run_mode: debug
 logger:
   level: debug
-  filePath: ../logs/car_bid.log
+  filePath: ../logs/logs.log
   encoding: json
   type: zap
 postgres:

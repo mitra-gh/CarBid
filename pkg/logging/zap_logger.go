@@ -52,8 +52,9 @@ func (l *zapLogger) Init() {
 		l.getZapLevel(l.cfg.Logger.Level),
 	)
 
-	logger := zap.New(core, zap.AddCaller(), zap.AddStacktrace(zapcore.ErrorLevel))
-	l.logger = logger.Sugar()
+	logger := zap.New(core, zap.AddCaller(), zap.AddStacktrace(zapcore.ErrorLevel)).Sugar()
+	zapSinLogger := logger.With("AppName", "CarBid", "LoggerName", "Zap")
+	l.logger = zapSinLogger
 }
 
 
