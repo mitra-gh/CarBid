@@ -3,6 +3,7 @@ package middlewares
 import (
 	"bytes"
 	"io"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -31,6 +32,10 @@ func DefaultStructuredLogger(cfg *configs.Config) gin.HandlerFunc {
 func structuredLogger(logger logging.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
+		if(strings.Contains(c.Request.URL.Path, "swagger")){
+			c.Next()
+			return
+		}
 
 		blw := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: c.Writer}
 		c.Writer = blw

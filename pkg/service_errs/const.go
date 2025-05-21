@@ -29,6 +29,9 @@ const (
 
 	// request
 	ErrRequestInvalid = "request invalid"
+
+	// limiter
+	ErrTooManyRequests = "too many requests"
 )
 
 const (

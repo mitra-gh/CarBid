@@ -34,7 +34,7 @@ func (s *OtpService) SetOtp(mobileNumber string, otp string) error {
 	}
 
 	res,err := cache.Get[dto.Otp](key)
-	if err == nil && res.Used {
+	if err == nil && !res.Used {
 		return serviceErrors.New(serviceErrors.ErrOtpAlreadyExists)
 	} else if err == nil {
 		return serviceErrors.New(serviceErrors.ErrOtpAlreadyUsed)

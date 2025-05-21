@@ -17,7 +17,7 @@ func InitServer(cfg *configs.Config) {
 
 	router.Use(middlewares.DefaultStructuredLogger(cfg))
 	router.Use(gin.Logger(), gin.Recovery())
-	
+	router.Use(middlewares.Limiter())
 
 	swagger := router.Group("/swagger")
 	routers.SwaggerRouter(&c, swagger,cfg)
@@ -26,7 +26,7 @@ func InitServer(cfg *configs.Config) {
 	v1 := router.Group("/api/v1")
 	routers.V1Router(&c, v1,cfg)
 
-	v1.Use(middlewares.DefaultStructuredLogger(cfg))
+
 
 	router.Run(fmt.Sprintf(":%s", cfg.Server.Port))
 }
