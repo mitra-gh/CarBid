@@ -43,6 +43,7 @@ services:
     networks:
       - web_api_network
     restart: unless-stopped
+    ####################### ELASTICSEARCH #######################
   setup:
     build:
       context: elk/setup/

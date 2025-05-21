@@ -24,3 +24,7 @@ redis:
   pool_size: 10
   pool_timeout: 15
   idle_check_frequency: 500
+otp:
+  expire_time: 120
+  length: 6
+  limiter: 100

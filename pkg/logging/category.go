@@ -5,12 +5,13 @@ type SubCategory string
 type ExtraKey string
 
 const (
-	General    Category = "General"
-	Internal   Category = "Internal"
-	Validation Category = "Validation"
-	Database   Category = "Database"
-	Cache      Category = "Cache"
-	File       Category = "File"
+	General         Category = "General"
+	Internal        Category = "Internal"
+	Validation      Category = "Validation"
+	Database        Category = "Database"
+	Cache           Category = "Cache"
+	File            Category = "File"
+	RequestResponse Category = "RequestResponse"
 )
 
 const (
@@ -56,4 +57,6 @@ const (
 	ErrorMessage ExtraKey = "ErrorMessage"
 	BodySize     ExtraKey = "BodySize"
 	Latency      ExtraKey = "Latency"
+	RequestBody  ExtraKey = "RequestBody"
+	ResponseBody ExtraKey = "ResponseBody"
 )

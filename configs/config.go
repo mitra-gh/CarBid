@@ -12,6 +12,7 @@ type Config struct {
 	Logger   LoggerConfig   `mapstructure:"logger"`
 	Postgres PostgresConfig `mapstructure:"postgres"`
 	Redis    RedisConfig    `mapstructure:"redis"`
+	Otp      OtpConfig      `mapstructure:"otp"`
 }
 
 type ServerConfig struct {
@@ -48,7 +49,11 @@ type RedisConfig struct {
 	IdleCheckFrequency int    `mapstructure:"idle_check_frequency"`
 }
 
-
+type  OtpConfig struct {
+	ExpirationTime time.Duration `mapstructure:"expire_time"`
+	Length  int `mapstructure:"length"`
+	Limiter time.Duration `mapstructure:"limiter"`
+}
 
 func GetConfig() (*Config, error) {
 	v, err := LoadConfig(getConfigPath(os.Getenv("ENV")), "yml")

@@ -11,13 +11,14 @@ import (
 )
 
 func main() {
+
 	cfg, err := configs.GetConfig()
 	if err != nil {
 		log.Fatalf("Failed to load config: %v", err)
 	}
 
+	
 	logger := logging.NewLogger(cfg)
-
 	logger.Info(logging.General, logging.StartUp, "Application started", nil)
 
 	// Initialize Redis

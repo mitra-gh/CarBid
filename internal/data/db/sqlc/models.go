@@ -6,16 +6,191 @@ package sqlc
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
-type User struct {
-	ID             int32     `json:"id"`
-	Username       string    `json:"username"`
-	Email          string    `json:"email"`
-	HashedPassword string    `json:"hashed_password"`
-	FullName       string    `json:"full_name"`
-	IsActive       bool      `json:"is_active"`
-	IsAdmin        bool      `json:"is_admin"`
+type CarModel struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	CompanyID uuid.UUID `json:"company_id"`
+	CarTypeID uuid.UUID `json:"car_type_id"`
+	GearboxID uuid.UUID `json:"gearbox_id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type CarModelColor struct {
+	ID         uuid.UUID `json:"id"`
+	CarModelID uuid.UUID `json:"car_model_id"`
+	ColorID    uuid.UUID `json:"color_id"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+type CarModelComment struct {
+	ID         uuid.UUID `json:"id"`
+	CarModelID uuid.UUID `json:"car_model_id"`
+	UserID     uuid.UUID `json:"user_id"`
+	Message    string    `json:"message"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+type CarModelImage struct {
+	ID          uuid.UUID `json:"id"`
+	CarModelID  uuid.UUID `json:"car_model_id"`
+	ImageID     uuid.UUID `json:"image_id"`
+	IsMainImage bool      `json:"is_main_image"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+type CarModelPriceHistory struct {
+	ID             uuid.UUID `json:"id"`
+	CarModelYearID uuid.UUID `json:"car_model_year_id"`
+	Price          float64   `json:"price"`
+	PriceAt        time.Time `json:"price_at"`
 	CreatedAt      time.Time `json:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at"`
+}
+
+type CarModelProperty struct {
+	ID         uuid.UUID `json:"id"`
+	CarModelID uuid.UUID `json:"car_model_id"`
+	PropertyID uuid.UUID `json:"property_id"`
+	Value      string    `json:"value"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+type CarModelYear struct {
+	ID            uuid.UUID `json:"id"`
+	CarModelID    uuid.UUID `json:"car_model_id"`
+	PersianYearID uuid.UUID `json:"persian_year_id"`
+	CreatedAt     time.Time `json:"created_at"`
+	UpdatedAt     time.Time `json:"updated_at"`
+}
+
+type CarType struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type City struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	CountryID uuid.UUID `json:"country_id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type Color struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	HexCode   string    `json:"hex_code"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type Company struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	Country   string    `json:"country"`
+	CountryID uuid.UUID `json:"country_id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type Country struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type CurrentCarPrice struct {
+	CarModelID     uuid.UUID `json:"car_model_id"`
+	CarModelName   string    `json:"car_model_name"`
+	CompanyName    string    `json:"company_name"`
+	PersianYear    int32     `json:"persian_year"`
+	CurrentPrice   float64   `json:"current_price"`
+	PriceUpdatedAt time.Time `json:"price_updated_at"`
+}
+
+type File struct {
+	ID          uuid.UUID `json:"id"`
+	Name        string    `json:"name"`
+	Directory   string    `json:"directory"`
+	Description string    `json:"description"`
+	MimeType    string    `json:"mime_type"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+type Gearbox struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type PersianYear struct {
+	ID           uuid.UUID `json:"id"`
+	PersianTitle string    `json:"persian_title"`
+	Year         int32     `json:"year"`
+	StartAt      time.Time `json:"start_at"`
+	EndAt        time.Time `json:"end_at"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
+}
+
+type Property struct {
+	ID          uuid.UUID `json:"id"`
+	Name        string    `json:"name"`
+	Icon        string    `json:"icon"`
+	CategoryID  uuid.UUID `json:"category_id"`
+	Description string    `json:"description"`
+	DataType    string    `json:"data_type"`
+	Unit        string    `json:"unit"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+}
+
+type PropertyCategory struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	Icon      string    `json:"icon"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type Role struct {
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type User struct {
+	ID           uuid.UUID `json:"id"`
+	Username     string    `json:"username"`
+	FirstName    string    `json:"first_name"`
+	LastName     string    `json:"last_name"`
+	MobileNumber string    `json:"mobile_number"`
+	Email        string    `json:"email"`
+	Password     string    `json:"password"`
+	Enabled      bool      `json:"enabled"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
+}
+
+type UserRole struct {
+	ID        uuid.UUID `json:"id"`
+	UserID    uuid.UUID `json:"user_id"`
+	RoleID    uuid.UUID `json:"role_id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

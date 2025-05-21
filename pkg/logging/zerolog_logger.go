@@ -49,8 +49,8 @@ func (l *zerologLogger) Init(){
 	var logger = zerolog.New(file).
 	With().
 	Timestamp().
-	Str("App Name", "CarBid").
-	Str("Logger Name", "ZerologLogger").
+	Str("AppName", "CarBid").
+	Str("LoggerName", "ZerologLogger").
 	Logger()
 
 	zerolog.SetGlobalLevel(l.getLevel())

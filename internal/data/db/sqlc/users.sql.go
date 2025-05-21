@@ -31,7 +31,7 @@ INSERT INTO users (
     $2::varchar,
     $3::varchar,
     $4::varchar
-) RETURNING id, username, email, hashed_password, full_name, is_active, is_admin, created_at, updated_at
+) RETURNING id, username, first_name, last_name, mobile_number, email, password, enabled, created_at, updated_at
 `
 
 type CreateUserParams struct {
@@ -52,11 +52,12 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.MobileNumber,
 		&i.Email,
-		&i.HashedPassword,
-		&i.FullName,
-		&i.IsActive,
-		&i.IsAdmin,
+		&i.Password,
+		&i.Enabled,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -74,7 +75,7 @@ func (q *Queries) DeleteUser(ctx context.Context, userID int32) error {
 }
 
 const getUser = `-- name: GetUser :one
-SELECT id, username, email, hashed_password, full_name, is_active, is_admin, created_at, updated_at FROM users 
+SELECT id, username, first_name, last_name, mobile_number, email, password, enabled, created_at, updated_at FROM users 
 WHERE id = $1::int LIMIT 1
 `
 
@@ -84,11 +85,12 @@ func (q *Queries) GetUser(ctx context.Context, userID int32) (User, error) {
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.MobileNumber,
 		&i.Email,
-		&i.HashedPassword,
-		&i.FullName,
-		&i.IsActive,
-		&i.IsAdmin,
+		&i.Password,
+		&i.Enabled,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -96,7 +98,7 @@ func (q *Queries) GetUser(ctx context.Context, userID int32) (User, error) {
 }
 
 const getUserByEmail = `-- name: GetUserByEmail :one
-SELECT id, username, email, hashed_password, full_name, is_active, is_admin, created_at, updated_at FROM users 
+SELECT id, username, first_name, last_name, mobile_number, email, password, enabled, created_at, updated_at FROM users 
 WHERE email = $1::varchar LIMIT 1
 `
 
@@ -106,11 +108,12 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.MobileNumber,
 		&i.Email,
-		&i.HashedPassword,
-		&i.FullName,
-		&i.IsActive,
-		&i.IsAdmin,
+		&i.Password,
+		&i.Enabled,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -118,7 +121,7 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error
 }
 
 const getUserByUsername = `-- name: GetUserByUsername :one
-SELECT id, username, email, hashed_password, full_name, is_active, is_admin, created_at, updated_at FROM users 
+SELECT id, username, first_name, last_name, mobile_number, email, password, enabled, created_at, updated_at FROM users 
 WHERE username = $1::varchar LIMIT 1
 `
 
@@ -128,11 +131,12 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User,
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.MobileNumber,
 		&i.Email,
-		&i.HashedPassword,
-		&i.FullName,
-		&i.IsActive,
-		&i.IsAdmin,
+		&i.Password,
+		&i.Enabled,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)
@@ -140,7 +144,7 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User,
 }
 
 const listUsers = `-- name: ListUsers :many
-SELECT id, username, email, hashed_password, full_name, is_active, is_admin, created_at, updated_at FROM users
+SELECT id, username, first_name, last_name, mobile_number, email, password, enabled, created_at, updated_at FROM users
 ORDER BY username
 LIMIT $2::int
 OFFSET $1::int
@@ -163,11 +167,12 @@ func (q *Queries) ListUsers(ctx context.Context, arg ListUsersParams) ([]User, e
 		if err := rows.Scan(
 			&i.ID,
 			&i.Username,
+			&i.FirstName,
+			&i.LastName,
+			&i.MobileNumber,
 			&i.Email,
-			&i.HashedPassword,
-			&i.FullName,
-			&i.IsActive,
-			&i.IsAdmin,
+			&i.Password,
+			&i.Enabled,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 		); err != nil {
@@ -182,7 +187,7 @@ func (q *Queries) ListUsers(ctx context.Context, arg ListUsersParams) ([]User, e
 }
 
 const searchUsers = `-- name: SearchUsers :many
-SELECT id, username, email, hashed_password, full_name, is_active, is_admin, created_at, updated_at FROM users
+SELECT id, username, first_name, last_name, mobile_number, email, password, enabled, created_at, updated_at FROM users
 WHERE 
     username LIKE '%' || $1::varchar || '%' OR
     email LIKE '%' || $1::varchar || '%' OR
@@ -208,11 +213,12 @@ func (q *Queries) SearchUsers(ctx context.Context, arg SearchUsersParams) ([]Use
 		if err := rows.Scan(
 			&i.ID,
 			&i.Username,
+			&i.FirstName,
+			&i.LastName,
+			&i.MobileNumber,
 			&i.Email,
-			&i.HashedPassword,
-			&i.FullName,
-			&i.IsActive,
-			&i.IsAdmin,
+			&i.Password,
+			&i.Enabled,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 		); err != nil {
@@ -236,7 +242,7 @@ SET
     is_active = COALESCE($5::boolean, is_active),
     is_admin = COALESCE($6::boolean, is_admin)
 WHERE id = $7::int
-RETURNING id, username, email, hashed_password, full_name, is_active, is_admin, created_at, updated_at
+RETURNING id, username, first_name, last_name, mobile_number, email, password, enabled, created_at, updated_at
 `
 
 type UpdateUserParams struct {
@@ -263,11 +269,12 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 	err := row.Scan(
 		&i.ID,
 		&i.Username,
+		&i.FirstName,
+		&i.LastName,
+		&i.MobileNumber,
 		&i.Email,
-		&i.HashedPassword,
-		&i.FullName,
-		&i.IsActive,
-		&i.IsAdmin,
+		&i.Password,
+		&i.Enabled,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)

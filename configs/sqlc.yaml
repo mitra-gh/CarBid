@@ -13,5 +13,32 @@ sql:
         emit_interface: true
         emit_exact_table_names: false
         overrides:
+          # Non-null types
+          - db_type: "uuid"
+            go_type: "github.com/google/uuid.UUID"
+          - db_type: "timestamp"
+            go_type: "time.Time"
           - db_type: "timestamptz"
             go_type: "time.Time"
+          - db_type: "numeric"
+            go_type: "float64"
+
+          # Nullable types
+          - db_type: "uuid"
+            go_type: "github.com/google/uuid.NullUUID"
+            nullable: true
+          - db_type: "text"
+            go_type: "database/sql.NullString"
+            nullable: true
+          - db_type: "integer"
+            go_type: "database/sql.NullInt32"
+            nullable: true
+          - db_type: "numeric"
+            go_type: "database/sql.NullFloat64"
+            nullable: true
+          - db_type: "timestamp"
+            go_type: "database/sql.NullTime"
+            nullable: true
+          - db_type: "timestamptz"
+            go_type: "database/sql.NullTime"
+            nullable: true
