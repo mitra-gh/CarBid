@@ -10,6 +10,8 @@ import (
 	"github.com/mitra-gh/CarBid/pkg/logging"
 )
 
+
+
 func main() {
 
 	cfg, err := configs.GetConfig()

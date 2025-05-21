@@ -1,4 +1,11 @@
 definitions:
+  dto.GetOtpRequest:
+    properties:
+      mobile_number:
+        type: string
+    required:
+    - mobile_number
+    type: object
   responseHelper.Response:
     properties:
       code:
@@ -32,4 +39,32 @@ paths:
           schema:
             $ref: '#/definitions/responseHelper.Response'
       summary: Health check
+  /v1/user/send-otp:
+    post:
+      consumes:
+      - application/json
+      description: Send OTP to the user's mobile number
+      parameters:
+      - description: Get OTP Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.GetOtpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OTP sent successfully
+          schema:
+            $ref: '#/definitions/responseHelper.Response'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/responseHelper.Response'
+        "500":
+          description: Failed to send OTP
+          schema:
+            $ref: '#/definitions/responseHelper.Response'
+      summary: Send OTP
 swagger: "2.0"

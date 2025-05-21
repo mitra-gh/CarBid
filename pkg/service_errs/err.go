@@ -1,14 +1,14 @@
 package serviceErrors
 
 type ServiceError struct {
-	massage ErrorMassage
+	massage string
 }
 
 func (e *ServiceError) Error() string {
-	return string(e.massage)
+	return e.massage
 }
 
-func New(massage ErrorMassage) *ServiceError {
+func New(massage string) *ServiceError {
 	return &ServiceError{
 		massage: massage,
 	}

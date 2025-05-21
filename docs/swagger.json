@@ -29,9 +29,63 @@
                     }
                 }
             }
+        },
+        "/v1/user/send-otp": {
+            "post": {
+                "description": "Send OTP to the user's mobile number",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Send OTP",
+                "parameters": [
+                    {
+                        "description": "Get OTP Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetOtpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OTP sent successfully",
+                        "schema": {
+                            "$ref": "#/definitions/responseHelper.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/responseHelper.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to send OTP",
+                        "schema": {
+                            "$ref": "#/definitions/responseHelper.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "dto.GetOtpRequest": {
+            "type": "object",
+            "required": [
+                "mobile_number"
+            ],
+            "properties": {
+                "mobile_number": {
+                    "type": "string"
+                }
+            }
+        },
         "responseHelper.Response": {
             "type": "object",
             "properties": {

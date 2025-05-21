@@ -46,7 +46,7 @@ func Set[T any](key string, value T, expiration time.Duration) error {
 		return err
 	}
 	ctx := context.Background()
-	return redisClient.Set(ctx, key, v, expiration).Err()
+	return redisClient.Set(ctx, key, v, expiration*time.Second).Err()
 }
 
 func Get[T any](key string) (T, error) {

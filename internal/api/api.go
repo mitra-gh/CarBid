@@ -24,7 +24,7 @@ func InitServer(cfg *configs.Config) {
 
 
 	v1 := router.Group("/api/v1")
-	routers.V1Router(&c, v1)
+	routers.V1Router(&c, v1,cfg)
 
 	v1.Use(middlewares.DefaultStructuredLogger(cfg))
 

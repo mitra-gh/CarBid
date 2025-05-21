@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/mitra-gh/CarBid/configs"
+	"github.com/mitra-gh/CarBid/internal/api/dto"
 	"github.com/mitra-gh/CarBid/internal/constants"
 	"github.com/mitra-gh/CarBid/internal/data/cache"
 	"github.com/mitra-gh/CarBid/pkg/logging"
@@ -15,10 +16,6 @@ type OtpService struct {
 	cfg    *configs.Config
 }
 
-type OtpDto struct {
-	Value string `json:"value"`
-	Used  bool   `json:"used"`
-}
 
 
 func NewOtpService(cfg *configs.Config) *OtpService {
@@ -31,12 +28,12 @@ func NewOtpService(cfg *configs.Config) *OtpService {
 
 func (s *OtpService) SetOtp(mobileNumber string, otp string) error {
 	key := fmt.Sprintf("%s:%s", constants.OtpKey, mobileNumber)
-	val := &OtpDto{
+	val := &dto.Otp{
 		Value: otp,
 		Used:  false,
 	}
 
-	res,err := cache.Get[OtpDto](key)
+	res,err := cache.Get[dto.Otp](key)
 	if err == nil && res.Used {
 		return serviceErrors.New(serviceErrors.ErrOtpAlreadyExists)
 	} else if err == nil {
@@ -52,7 +49,7 @@ func (s *OtpService) SetOtp(mobileNumber string, otp string) error {
 
 func (s *OtpService) ValidateOtp(mobileNumber string, otp string) error {
 	key := fmt.Sprintf("%s:%s", constants.OtpKey, mobileNumber)
-	res,err := cache.Get[OtpDto](key)
+	res,err := cache.Get[dto.Otp](key)
 
 	switch{
 		case err != nil:
